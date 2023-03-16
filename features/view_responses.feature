@@ -10,11 +10,11 @@ Feature: View responses
             | Bob     | bob@minions.evil     |
             | Kevin   | kevin@minions.evil   |
             | Norbert | norbert@minions.evil |
-        And "Bob" has submitted answers
+        And "Bob" has submitted responses
             | question  | answer |
             | question1 | banana |
             | question2 | yes    |
-        And "Kevin" has submitted answers
+        And "Kevin" has submitted responses
             | question  | answer      |
             | question1 | also banana |
             | question2 | no          |

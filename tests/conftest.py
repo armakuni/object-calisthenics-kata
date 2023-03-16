@@ -1,10 +1,10 @@
 import pytest
 
-from src.intrastructure import mail_service, questionnaire_store
+from src.intrastructure import datastore, mail_service
 
 
 @pytest.fixture(autouse=True)
 def clear_global_state():
     # This is a nasty global memory storage system, so we'll tidy up before each test
-    questionnaire_store.clear()
+    datastore.clear()
     mail_service.clear()

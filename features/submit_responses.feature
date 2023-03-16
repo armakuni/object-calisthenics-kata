@@ -38,3 +38,24 @@ Feature: Submit responses
             | question                                          | answer |
             | What is your favourite cheese?                    | Brie   |
         Then "Kevin" receives an error "'Should we be given free snacks during work hours?' is a question in 'Favourite Snacks' but has no answer"
+
+
+    Scenario: Submitting a response containing the wrong type for a yes/no question gives an error
+        Given there is a questionnaire "Favourite Snacks" with questions
+            | question                                          | type   |
+            | Should we be given free snacks during work hours? | yes/no |
+        And there is a case for respondent "Kevin" for the questionnaire
+        When "Kevin" submits the following responses
+            | question                                          | answer      |
+            | Should we be given free snacks during work hours? | affirmative |
+        Then "Kevin" receives an error "'Should we be given free snacks during work hours?' must be 'yes' or 'no', got 'affirmative'"
+
+    Scenario: Submitting a response containing the wrong type for a count question gives an error
+        Given there is a questionnaire "Favourite Snacks" with questions
+            | question                                 | type   |
+            | How many snacks do you consume in a day? | count  |
+        And there is a case for respondent "Kevin" for the questionnaire
+        When "Kevin" submits the following responses
+            | question                                 | answer |
+            | How many snacks do you consume in a day? | one    |
+        Then "Kevin" receives an error "'How many snacks do you consume in a day?' must be a number, got 'one'"

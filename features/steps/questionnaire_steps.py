@@ -4,8 +4,9 @@ from behave import given, then, when
 from hamcrest import assert_that, equal_to, has_key, has_property, has_string, is_not
 from steps.helpers import capture_exception
 
-import src.questionnaire.actions.questionaire_actions as questionnaire_actions
-from src.questionnaire.actions.questionaire_actions import CreateQuestionnaireError
+import src.questionnaire.actions.view_questionnaire as questionnaire_actions
+from src.questionnaire.actions.create_questionnaire import CreateQuestionnaireError
+from src.questionnaire.actions_factory import ActionsFactory
 
 
 @given("there is a questionnaire")
@@ -42,7 +43,9 @@ def view_questionnaire(context):
 @when('I view questionnaire "{questionnaire_id}"')
 @capture_exception(questionnaire_actions.ViewQuestionnaireError)
 def view_questionnaire_by_id(context, questionnaire_id: str):
-    context.questionnaire = questionnaire_actions.view_questionnaire(questionnaire_id)
+    context.questionnaire = ActionsFactory.create_view_questionnaire_action().execute(
+        questionnaire_id
+    )
 
 
 @then("I should receive a questionnaire ID")
@@ -88,8 +91,10 @@ def assert_questionnaire_questions(context):
 
 @capture_exception(CreateQuestionnaireError)
 def create_questionnaire(context, title: str, questions: List[Dict[str, str]]):
-    context.questionnaire_id = questionnaire_actions.create_questionnaire(
-        title=title, questions=questions
+    context.questionnaire_id = (
+        ActionsFactory.create_create_questionnaire_action().execute(
+            title=title, questions=questions
+        )
     )
 
 

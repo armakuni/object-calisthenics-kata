@@ -1,8 +1,10 @@
 from behave import given, then, when
 from hamcrest import assert_that, equal_to, has_item
-
-from src.questionnaire.actions import response_actions
 from steps.helpers import capture_exception
+
+import src.questionnaire.actions.submit_response
+from src.questionnaire.actions.view_responses import ViewResponsesError
+from src.questionnaire.actions_factory import ActionsFactory
 
 
 @given('there is no case with the user access code "{uac}"')
@@ -12,22 +14,26 @@ def ensure_case_does_not_exist(context, uac):
 
 
 @when('I submit responses for case "{uac}"')
-@capture_exception(response_actions.SubmitResponseError)
+@capture_exception(src.questionnaire.actions.submit_response.SubmitResponseError)
 def submit_example_responses(context, uac):
-    response_actions.submit_response(uac, {})
+    ActionsFactory.create_submit_response_action().execute(uac, {})
 
 
-@given('"{respondent_name}" has submitted answers')
+@given('"{respondent_name}" has submitted responses')
 @when('"{respondent_name}" submits the following responses')
-@capture_exception(response_actions.SubmitResponseError)
+@capture_exception(src.questionnaire.actions.submit_response.SubmitResponseError)
 def submit_responses(context, respondent_name):
-    answers = {row["question"]: row["answer"] for row in context.table}
-    response_actions.submit_response(context.uac_for[respondent_name], answers)
+    responses = {row["question"]: row["answer"] for row in context.table}
+    ActionsFactory.create_submit_response_action().execute(
+        context.uac_for[respondent_name], responses
+    )
 
 
 @when('I view the responses for the questionnaire "{questionnaire_name}"')
 def view_responses_for_questionnaire(context, questionnaire_name):
-    context.responses = response_actions.view_responses(context.questionnaire_id)
+    context.responses = ActionsFactory.create_view_responses_action().execute(
+        context.questionnaire_id
+    )
 
 
 @then("I should see the responses")
@@ -45,6 +51,8 @@ def assert_responses(context):
 
 
 @when('I view the responses for the questionnaire with ID "{questionnaire_id}"')
-@capture_exception(response_actions.ViewResponsesError)
+@capture_exception(ViewResponsesError)
 def view_responses_for_questionnaire_with_d(context, questionnaire_id):
-    context.responses = response_actions.view_responses(questionnaire_id)
+    context.responses = ActionsFactory.create_view_responses_action().execute(
+        questionnaire_id
+    )
