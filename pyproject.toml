@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "blaise-object-calisthenics"
+version = "0.1.0"
+description = ""
+authors = ["Tom Oram <tom.oram@aramkuni.com>"]
+readme = "README.md"
+packages = [{include = "blaise_object_calisthenics"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+behave = "^1.2.6"
+black = "^23.1.0"
+mypy = "^1.1.1"
+flake8 = "^6.0.0"
+pyhamcrest = "^2.0.4"
+pytest = "^7.2.2"
+pyproject-flake8 = "^6.0.0.post1"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
