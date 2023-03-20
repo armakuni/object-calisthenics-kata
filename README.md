@@ -97,6 +97,13 @@ def is_success(self):
     return True
 ```
 
+or better yet (in this particular circumstance)
+
+```python
+def is_success(self):
+    return self.status == "success"
+```
+
 ### 3. Wrap All Primitives and Strings
 
 If you have a string, number or bool then wrap it in a class with a meaningful
