@@ -307,3 +307,7 @@ def send_email(customer):
 
 1. Are actions an example of the [command pattern](https://refactoring.guru/design-patterns/command)? Why or why not?
 2. What is the role of the [ActionsFactory](./src/actions_factory.py), what does it enable?
+3. What is the benefit of a method parameter being an abstract interface
+    ([Protocol](https://docs.python.org/3/library/typing.html#typing.Protocol) in Python terms)
+    rather than a concrete type? (e.g. `def send_email(self, messenger: Messenger)` vs
+    `def send_email(self, messenger: EmailMessenger)`)
