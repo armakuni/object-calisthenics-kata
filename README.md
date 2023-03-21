@@ -311,4 +311,5 @@ def send_email(customer):
     ([Protocol](https://docs.python.org/3/library/typing.html#typing.Protocol) in Python terms)
     rather than a concrete type? (e.g. `def send_email(self, messenger: Messenger)` vs
     `def send_email(self, messenger: EmailMessenger)`)
-4. Did you use ChatGPT to answer these questions?
+4. What is the benefit of wrapping primitive types in classes? (e.g. `class Age` vs `age: int`)
+5. Did you use ChatGPT to answer these questions?
